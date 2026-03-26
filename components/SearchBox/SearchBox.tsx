@@ -2,11 +2,11 @@
 
 import css from "./SearchBox.module.css";
 
-export default function SearchBox({
-  onChange,
-}: {
+interface SearchBoxProps {
   onChange: (value: string) => void;
-}) {
+}
+
+export default function SearchBox({ onChange }: SearchBoxProps) {
   return (
     <input
       type="text"

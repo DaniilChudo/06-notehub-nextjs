@@ -7,13 +7,26 @@ import { createNote } from "../../lib/api";
 import { NoteTag } from "../../types/note";
 import css from "./NoteForm.module.css";
 
+// Визначення дозволених тегів для валідації
+const VALID_TAGS: NoteTag[] = [
+  "Todo",
+  "Work",
+  "Personal",
+  "Meeting",
+  "Shopping",
+];
+
 const schema = Yup.object({
   title: Yup.string().min(3).max(50).required(),
   content: Yup.string().max(500),
-  tag: Yup.string().required(),
+  tag: Yup.string().oneOf(VALID_TAGS).required(), // Покращена валідація
 });
 
-export default function NoteForm({ onClose }: { onClose: () => void }) {
+interface NoteFormProps {
+  onClose: () => void;
+}
+
+export default function NoteForm({ onClose }: NoteFormProps) {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
@@ -36,7 +49,7 @@ export default function NoteForm({ onClose }: { onClose: () => void }) {
     >
       <Form className={css.form}>
         <Field name="title" placeholder="Title" className={css.input} />
-        <ErrorMessage name="title" component="span" />
+        <ErrorMessage name="title" component="span" className={css.error} />
 
         <Field
           as="textarea"
@@ -46,18 +59,18 @@ export default function NoteForm({ onClose }: { onClose: () => void }) {
         />
 
         <Field as="select" name="tag" className={css.select}>
-          <option value="Todo">Todo</option>
-          <option value="Work">Work</option>
-          <option value="Personal">Personal</option>
-          <option value="Meeting">Meeting</option>
-          <option value="Shopping">Shopping</option>
+          {VALID_TAGS.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
+            </option>
+          ))}
         </Field>
 
         <div className={css.actions}>
-          <button type="button" onClick={onClose}>
+          <button type="button" onClick={onClose} className={css.button}>
             Cancel
           </button>
-          <button type="submit" disabled={isPending}>
+          <button type="submit" disabled={isPending} className={css.button}>
             {isPending ? "Creating..." : "Create"}
           </button>
         </div>

@@ -6,7 +6,11 @@ import { deleteNote } from "../../lib/api";
 import { Note } from "../../types/note";
 import css from "./NoteList.module.css";
 
-export default function NoteList({ notes }: { notes: Note[] }) {
+interface NoteListProps {
+  notes: Note[];
+}
+
+export default function NoteList({ notes }: NoteListProps) {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
@@ -24,12 +28,15 @@ export default function NoteList({ notes }: { notes: Note[] }) {
           <p>{note.content}</p>
 
           <div className={css.footer}>
-            <span>{note.tag}</span>
+            <span className={css.tag}>{note.tag}</span>
 
             <div className={css.actions}>
-              <Link href={`/notes/${note.id}`}>View details</Link>
-
-              <button onClick={() => mutate(note.id)}>Delete</button>
+              <Link href={`/notes/${note.id}`} className={css.link}>
+                View details
+              </Link>
+              <button onClick={() => mutate(note.id)} className={css.deleteBtn}>
+                Delete
+              </button>
             </div>
           </div>
         </li>

@@ -1,4 +1,3 @@
-// components/Home/Home.tsx
 import css from "./Home.module.css";
 
 export default function Home() {
@@ -9,7 +8,7 @@ export default function Home() {
         <p className={css.description}>
           NoteHub is a simple and efficient application designed for managing
           personal notes. It helps keep your thoughts organized and accessible
-          in one place.
+          in one place, whether you are at home or on the go.
         </p>
         <p className={css.description}>
           The app provides a clean interface for writing, editing, and browsing

@@ -31,7 +31,9 @@ export default function NotesClient() {
   });
 
   return (
-    <div className={css.container}>
+    <div className={css.app}>
+      {" "}
+      {/* Змінив container на app відповідно до вашого CSS */}
       <header className={css.toolbar}>
         <SearchBox onChange={handleSearch} />
 
@@ -39,14 +41,15 @@ export default function NotesClient() {
           <Pagination
             pageCount={data.totalPages}
             onPageChange={({ selected }) => setPage(selected + 1)}
+            currentPage={page} // ТУТ ВИПРАВЛЕНО: передаємо поточну сторінку
           />
         )}
 
-        <button onClick={() => setIsOpen(true)}>Create note +</button>
+        <button className={css.button} onClick={() => setIsOpen(true)}>
+          Create note +
+        </button>
       </header>
-
       {data && <NoteList notes={data.notes} />}
-
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
           <NoteForm onClose={() => setIsOpen(false)} />

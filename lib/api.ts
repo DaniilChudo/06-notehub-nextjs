@@ -18,14 +18,16 @@ export const fetchNotes = async (
   perPage = 12,
   search = "",
 ): Promise<FetchNotesResponse> => {
-  const { data } = await instance.get("/notes", {
+  // Додано дженерик <FetchNotesResponse>
+  const { data } = await instance.get<FetchNotesResponse>("/notes", {
     params: { page, perPage, search },
   });
   return data;
 };
 
 export const fetchNoteById = async (id: string): Promise<Note> => {
-  const { data } = await instance.get(`/notes/${id}`);
+  // Додано дженерик <Note>
+  const { data } = await instance.get<Note>(`/notes/${id}`);
   return data;
 };
 
@@ -34,11 +36,13 @@ export const createNote = async (note: {
   content: string;
   tag: NoteTag;
 }): Promise<Note> => {
-  const { data } = await instance.post("/notes", note);
+  // Додано дженерик <Note>
+  const { data } = await instance.post<Note>("/notes", note);
   return data;
 };
 
 export const deleteNote = async (id: string): Promise<Note> => {
-  const { data } = await instance.delete(`/notes/${id}`);
+  // Додано дженерик <Note>
+  const { data } = await instance.delete<Note>(`/notes/${id}`);
   return data;
 };
